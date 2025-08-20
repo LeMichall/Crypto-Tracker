@@ -1,0 +1,7 @@
+1.Favourite -> more coins informations in cards = modal? charts(dependency)?
+2.Currency selector -> add to mainLayout? ->
+    add to favourite page -> adjust api request
+3.Move api requests to separate file
+4.Favourite -> Improve responsiveness 
+5.Use outlet to pass state -> currency?
+6.Refactor modal

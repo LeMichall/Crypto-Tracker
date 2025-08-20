@@ -1,0 +1,15 @@
+.searchInput {
+  padding: 8px 0px 8px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 2px solid #ccc;
+  width: 95%;
+  max-width: 300px;
+  margin-top: 40px;
+  align-self: center;
+}
+@media (max-width: 480px) {
+  .searchInput {
+    font-size: 14px;
+  }
+}

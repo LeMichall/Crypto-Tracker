@@ -1,0 +1,4 @@
+.favourite {
+  display: flex;
+  flex-direction: column;
+}

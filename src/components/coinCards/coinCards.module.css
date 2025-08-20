@@ -1,0 +1,49 @@
+.cardContainer {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  text-align: center;
+}
+
+.dark {
+  background: #2b2b3c;
+  color: #f1f1f1;
+}
+
+.card img {
+  width: 40px;
+  align-self: center;
+}
+.coinName {
+  margin: 0;
+}
+.coinValue {
+  margin: 0;
+}
+.card button {
+  padding: 6px 12px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.card button:hover {
+  background-color: #a71d2a;
+}

@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+}
+.home {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  color: black;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.dark {
+  background: #1e1e2f;
+  color: #f1f1f1;
+}

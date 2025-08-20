@@ -1,0 +1,162 @@
+.tableContainer {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  color: #222;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 12px 16px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #222;
+}
+
+.table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.table tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.table tr:hover {
+  background-color: #eaeaea;
+}
+.favButton {
+  margin-right: 5px;
+  color: gold;
+  font-size: 28px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.coinImage {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.cryptoIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.green {
+  color: #0c9a4c;
+  font-weight: 500;
+}
+
+.red {
+  color: #e03e3e;
+  font-weight: 500;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  gap: 8px;
+}
+
+.paginationBtn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.paginationBtn:hover {
+  background-color: #0056b3;
+}
+
+.paginationPage {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #222;
+}
+
+.dark .table {
+  color: #ffffff;
+}
+.dark th,
+.dark td {
+  border: 1px solid #444;
+}
+.dark .table th {
+  background-color: #1f1f2e;
+  color: #ffffff;
+}
+
+.dark .table tr:nth-child(even) {
+  background-color: #33344d;
+}
+
+.dark .table tr:nth-child(odd) {
+  background-color: #2b2b3c;
+}
+
+.dark .table tr:hover {
+  background-color: #3b3c5c;
+}
+
+.dark .paginationPage {
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .table th,
+  .table td {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .paginationBtn {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+  }
+
+  .paginationPage {
+    font-size: 0.9rem;
+  }
+  .cryptoIcon {
+    gap: 4px;
+  }
+  .favButton {
+    font-size: 22px;
+  }
+}
+@media (max-width: 480px) {
+  .table th,
+  .table td {
+    padding: 4px;
+    font-size: 0.85rem;
+  }
+  .cryptoIcon {
+    gap: 0px;
+  }
+  .favButton {
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,35 @@
+.sidebar {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  font-size: 18px;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.link:hover,
+.active {
+  color: #007bff;
+}
+
+.dark .link:hover,
+.dark .active {
+  color: #66b2ff;
+}

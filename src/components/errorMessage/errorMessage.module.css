@@ -1,0 +1,18 @@
+.errorContainer {
+  color: red;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.retryButton {
+  margin-top: 0.5rem;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+.retryButton:hover {
+  background-color: #a71d2a;
+}
