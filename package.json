@@ -4,7 +4,7 @@
   "description": "",
   "keywords": [],
   "main": "src/index.js",
-  "homepage": "https://LeMichall.github.io/crypto-tracker/",
+  "homepage": "https://lemichall.github.io/crypto-tracker/",
   "dependencies": {
     "react": "19.1.0",
     "react-dom": "19.1.0",
