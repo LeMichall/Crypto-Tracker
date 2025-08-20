@@ -9,20 +9,20 @@ jobs:
     deploy:
       runs-on: ubuntu-latest
 
-steps:
-  - name: Checkout code
-    uses: actions/checkout@v4
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  - name: Setup Git
-    run: |
-      git config --global user.name "Github Actions"
-      git config --global user.email "actions@example.com"
-  - name: Deploy to gh-pages
-    run: |
-      git fetch origin gh-pages
-      git checkout gh-pages || git checkout -b gh-pages
-      git rm -r --cached . || true
-      cp -r ./* . # Copy all files to the root
-      git add .
-      git commit -m "Deploy to GitHub Pages" || true
-      git push origin gh-pages
+      - name: Setup Git
+        run: |
+          git config --global user.name "Github Actions"
+          git config --global user.email "actions@example.com"
+      - name: Deploy to gh-pages
+        run: |
+          git fetch origin gh-pages
+          git checkout gh-pages || git checkout -b gh-pages
+          git rm -r --cached . || true
+          cp -r ./* . # Copy all files to the root
+          git add .
+          git commit -m "Deploy to GitHub Pages" || true
+          git push origin gh-pages
