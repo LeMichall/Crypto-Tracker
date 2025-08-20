@@ -43,6 +43,10 @@
   cursor: pointer;
   background: none;
   border: none;
+  transition: 0.3s;
+}
+.favButton:hover{
+  transform: scale(1.2);
 }
 
 .coinImage {
@@ -56,6 +60,7 @@
   gap: 8px;
   cursor: pointer;
   user-select: none;
+
 }
 
 .green {
