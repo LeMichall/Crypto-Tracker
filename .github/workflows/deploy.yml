@@ -4,8 +4,10 @@ on:
   push:
     branches:
       - master
+
 permissions:
   contents: write
+
 jobs:
     deploy:
       runs-on: ubuntu-latest
@@ -23,7 +25,7 @@ jobs:
           git fetch origin gh-pages
           git checkout gh-pages || git checkout -b gh-pages
           git rm -r --cached . || true
-          cp -r ./* . # Copy all files to the root
+          cp -r src/* . # Copy all files to the root
           git add .
           git commit -m "Deploy to GitHub Pages" || true
           git push origin gh-pages
