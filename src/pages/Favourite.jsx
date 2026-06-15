@@ -6,45 +6,34 @@ import SearchBar from "../components/searchBar/searchBar";
 import CoinCards from "../components/coinCards/coinCards";
 import Loader from "../components/loader/loader";
 import ErrorMessage from "../components/errorMessage/errorMessage";
+import { useQuery } from "@tanstack/react-query";
+import { fetchMarkets } from "../api/coins";
 
 export default function Favourite() {
   const { favorites, removeFavorites } = useFavorites();
   const { darkMode } = useLayoutContext();
-  const [coins, setCoins] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  // use react-query data directly
   const [currency, setCurrency] = useState(() =>
     localStorage.getItem("currency")
   );
 
-  //fetching function , move to separate file?
-  const fetchCoins = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&sparkline=true&ids=${favorites.join(
-          ","
-        )}`
-      );
-      if (!res.ok) throw new Error("Failed to fetch coins");
-      const data = await res.json();
-      setCoins(data);
-      setError("");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-  // fetching coins on load if favorites exists
-  useEffect(() => {
-    if (favorites.length === 0) {
-      setLoading(false);
-      return;
-    }
-    fetchCoins();
-  }, []);
+  // use react-query to fetch favorite coins by ids
+  const {
+    data: favData = [],
+    isLoading: favLoading,
+    isError: favIsError,
+    error: favError,
+    refetch: refetchFavs,
+  } = useQuery({
+    queryKey: ["favorites", favorites, currency],
+    queryFn: () => fetchMarkets(currency, 1, Math.max(favorites.length, 1), "market_cap_desc", true, favorites.join(",")),
+    enabled: favorites.length > 0,
+  });
+
+  const coins = favData || [];
+  const loading = favLoading;
+  const error = favIsError ? (favError?.message || "Error") : "";
   // Filtering coins to enable searchBar
   // Force component render on favorites change
   const filteredFavCoins = coins.filter(
@@ -59,7 +48,7 @@ export default function Favourite() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       {loading && <Loader />}
-      {error && <ErrorMessage error={error} onRetry={fetchCoins} />}
+      {error && <ErrorMessage error={error} onRetry={refetchFavs} />}
       {!loading && !error && (
         <CoinCards favCoins={filteredFavCoins} removeFav={removeFavorites} currency={currency} />
       )}

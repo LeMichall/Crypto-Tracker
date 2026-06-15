@@ -1,43 +1,34 @@
 import React, { useEffect, useState } from "react";
 import styles from "./modal.module.css";
 import useLayoutContext from "../../hooks/useLayoutContext";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCoinDetails } from "../../api/coins";
 
 export default function Modal({ coin, onClose }) {
-  const [details, setDetails] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const { darkMode } = useLayoutContext();
 
   const handleCloseModal = () => {
     setIsExpanded(false);
-    console.log(details);
+    console.log(detailsData);
     onClose();
   };
 
   const getTruncatedText = (text, limit = 300) => {
     return text.length > limit ? text.slice(0, limit) + "..." : text;
   };
-  const fetchDetails = async () => {
-    try {
-      const res = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${coin.id}?localization=false`
-      );
-      const data = await res.json();
-      setDetails(data);
-    } catch (error) {
-      console.error("Error fetching coin details:", error);
-    }
-  };
-  useEffect(() => {
-    if (!coin) return;
-    fetchDetails();
-  }, [coin]);
+  const { data: detailsData, refetch: refetchDetails } = useQuery({
+    queryKey: ["coin", coin?.id],
+    queryFn: () => fetchCoinDetails(coin.id),
+    enabled: !!coin,
+  });
 
-  if (!coin || !details) return null;
+  if (!coin || !detailsData) return null;
 
-  const description = details.description?.en || "No description available.";
-  const homepageLinks = details.links?.homepage?.filter((link) => link);
-  const sentimentUp = details.sentiment_votes_up_percentage;
-  const sentimentDown = details.sentiment_votes_down_percentage;
+  const description = detailsData.description?.en || "No description available.";
+  const homepageLinks = detailsData.links?.homepage?.filter((link) => link);
+  const sentimentUp = detailsData.sentiment_votes_up_percentage;
+  const sentimentDown = detailsData.sentiment_votes_down_percentage;
 
   return (
     <div
