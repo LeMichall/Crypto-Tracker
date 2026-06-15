@@ -73,7 +73,10 @@ export default function CoinTable({
                     : styles.red
                 }
               >
-                {coin.price_change_percentage_24h.toFixed(2)}%
+                {typeof coin.price_change_percentage_24h === "number"
+                  ? coin.price_change_percentage_24h.toFixed(2)
+                  : "0.00"}
+                %
               </td>
               <td>{formatCurrency(coin.market_cap, currency)}</td>
             </tr>

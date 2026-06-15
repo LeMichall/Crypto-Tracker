@@ -7,6 +7,8 @@ import Loader from "../components/loader/loader";
 import SearchBar from "../components/searchBar/searchBar";
 import ErrorMessage from "../components/errorMessage/errorMessage";
 import CoinTable from "../components/coinTable/coinTable";
+import { useQuery } from "@tanstack/react-query";
+import { fetchMarkets } from "../api/coins";
 
 export default function Home() {
   // Initial state straight from localStorage with fallback "usd"
@@ -17,29 +19,27 @@ export default function Home() {
   const { darkMode } = useLayoutContext();
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [coins, setCoins] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // use data directly from react-query
   const [selectedCoin, setSelectedCoin] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
-  // Fetching function, move to separate file?
-  const fetchCoins = async () => {
-    setLoading(true);
-    console.log("fetched");
-    try {
-      const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=20&page=${page}&sparkline=true`
-      );
-      if (!response.ok) throw new Error("Failed to fetch data");
-      const data = await response.json();
-      setCoins(data);
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-    }
-    setLoading(false);
-  };
+  // use react-query for markets
+  const {
+    data: queryData = [],
+    isLoading,
+    isError,
+    error: queryError,
+    refetch,
+  } = useQuery({
+    queryKey: ["markets", currency, page],
+    queryFn: () => fetchMarkets(currency, page),
+    keepPreviousData: true,
+    refetchInterval: 600000,
+  });
+
+  const coins = queryData || [];
+  const loading = isLoading;
+  const error = isError ? (queryError?.message || "Error") : null;
   //Sorting coins
   const sortedCoins = [...coins].sort((a, b) => {
     if (!sortConfig.key) return 0;
@@ -54,11 +54,7 @@ export default function Home() {
     }
   });
 // fetch on load, refresh rate 10 min or on currency/page change
-  useEffect(() => {
-    fetchCoins();
-    const interval = setInterval(fetchCoins, 600000);
-    return () => clearInterval(interval);
-  }, [currency, page]);
+  // react-query will refetch automatically when `currency` or `page` in the queryKey change
 
   useEffect(() => {
     localStorage.setItem("currency", currency);
@@ -91,7 +87,7 @@ export default function Home() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       {loading && <Loader />}
-      {error && <ErrorMessage error={error} onRetry={fetchCoins} />}
+      {error && <ErrorMessage error={error} onRetry={refetch} />}
       {!loading && !error && (
         <CoinTable
           coins={filteredCoins}
